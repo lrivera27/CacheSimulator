@@ -10,5 +10,7 @@ package cachesimulator;
  * @author lrive
  */
 public class LRU {
-    
+    public int hits;
+    public int misses;
+    public long endTime;
 }
