@@ -23,6 +23,6 @@ public class LRU {
     }
     
     public void DisplayCache(){
-        
+    
     }
 }
