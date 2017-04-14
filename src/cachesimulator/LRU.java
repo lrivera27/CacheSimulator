@@ -5,6 +5,8 @@
  */
 package cachesimulator;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author lrive
@@ -13,4 +15,10 @@ public class LRU {
     public int hits;
     public int misses;
     public long endTime;
+    public ArrayList<Integer> fifoCache = new ArrayList<>();
+    
+   
+    public void Start(Cache cacheDetails){
+        
+    }
 }
