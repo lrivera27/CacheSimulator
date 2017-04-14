@@ -27,7 +27,7 @@ public class FIFO {
     
     // Holds the Array with the indexes of the next value to be replaced.
     // The reason we need this to be an array is because this class works 
-    // for N-_ways, so we need one index for each set.
+    // for N-ways, so we need one index for each set.
     public ArrayList<Integer> _cacheIndex = new ArrayList<>();
     
     // This Start Method will simply start the FIFO replacement algorithm.
