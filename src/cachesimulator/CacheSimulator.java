@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package cachesimulator;
+import java.awt.FileDialog;
+import java.awt.Frame;
+import java.io.File;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,6 +20,8 @@ public class CacheSimulator extends javax.swing.JFrame {
      */
     public CacheSimulator() {
         initComponents();
+        
+        
     }
 
     /**
@@ -31,8 +37,16 @@ public class CacheSimulator extends javax.swing.JFrame {
         file_tbox = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         startSim_btn = new javax.swing.JButton();
+        cacheSizeTbox = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cache Simulator");
+        setFocusCycleRoot(false);
 
         openFile_btn.setText("Open File");
         openFile_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -41,8 +55,15 @@ public class CacheSimulator extends javax.swing.JFrame {
             }
         });
 
+        file_tbox.setEnabled(false);
+        file_tbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                file_tboxActionPerformed(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Cache Simulator");
+        jLabel1.setText("Cache properties");
 
         startSim_btn.setText("Start Simulation");
         startSim_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -51,53 +72,113 @@ public class CacheSimulator extends javax.swing.JFrame {
             }
         });
 
+        cacheSizeTbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cacheSizeTboxActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Cache Size");
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Fully assosiative", "2-way associative", "4-way associative" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList1.setToolTipText("");
+        jScrollPane1.setViewportView(jList1);
+
+        jLabel4.setText("Mapping mode");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(openFile_btn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(file_tbox, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(312, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(startSim_btn)
-                .addGap(233, 233, 233))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(openFile_btn)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(file_tbox)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cacheSizeTbox, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(startSim_btn))
+                                .addGap(0, 94, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(openFile_btn)
                     .addComponent(file_tbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(160, 160, 160)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cacheSizeTbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(startSim_btn)
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addGap(17, 17, 17)
+                .addComponent(jLabel3)
+                .addGap(114, 114, 114))
         );
 
         openFile_btn.getAccessibleContext().setAccessibleName("openFile_btn");
         file_tbox.getAccessibleContext().setAccessibleName("file_tbox");
-        startSim_btn.getAccessibleContext().setAccessibleName("Start Simulation");
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void openFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFile_btnActionPerformed
-        // TODO add your handling code here:
-        
+       // Getting file
+        Frame fileWindow = null;
+        FileDialog fd = new FileDialog(fileWindow, "Choose a file", FileDialog.LOAD);
+        fd.setDirectory("C:\\");
+        fd.setFile("*.pdf");
+        fd.setVisible(true);
+        String filename = fd.getFile();
+        if (filename == null)
+            CacheSimulator.infoBox("You cancelled the choice", "From open file btn");
+        else 
+            file_tbox.setText(new File(filename).getAbsolutePath());
+        //
         
     }//GEN-LAST:event_openFile_btnActionPerformed
 
     private void startSim_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSim_btnActionPerformed
-        // TODO add your handling code here:
+
+        // Validating numbers entered by user
+        
+        try {
+            int num1 = Integer.parseInt(cacheSizeTbox.getText());
+        } catch (NumberFormatException e) {
+        JOptionPane.showConfirmDialog(null, "Please enter numbers only", "Error", JOptionPane.CANCEL_OPTION);
+        return;
+        }
+        // 
+        
         Cache cacheSim = new Cache();
         byte cacheSize = 8;
         byte ways = 2;
@@ -119,6 +200,14 @@ public class CacheSimulator extends javax.swing.JFrame {
         new Thread(Fifo).start();
         
     }//GEN-LAST:event_startSim_btnActionPerformed
+
+    private void file_tboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_file_tboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_file_tboxActionPerformed
+
+    private void cacheSizeTboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cacheSizeTboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cacheSizeTboxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,10 +244,20 @@ public class CacheSimulator extends javax.swing.JFrame {
             }
         });
     }
+     public static void infoBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cacheSizeTbox;
     private javax.swing.JTextField file_tbox;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton openFile_btn;
     private javax.swing.JButton startSim_btn;
     // End of variables declaration//GEN-END:variables
