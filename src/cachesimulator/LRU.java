@@ -12,14 +12,14 @@ import java.util.ArrayList;
  * @author lrive
  */
 public class LRU {
-    public int hits;
-    public int misses;
-    public long endTime;
-    public ArrayList<Integer> fifoCache = new ArrayList<>();
+    public int _hits;
+    public int _misses;
+    public long _endTime;
+    public ArrayList<Integer> _lruCache = new ArrayList<>();
     
    
     public void Start(Cache cacheDetails){
-
+        
     }
     
     public void DisplayCache(){

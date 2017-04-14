@@ -189,9 +189,9 @@ public class CacheSimulator extends javax.swing.JFrame {
         Runnable Fifo = new Runnable() {
             public void run() {
                 fifoCache.Start(cacheSim);
-                System.out.println("FIFO Hits: " + fifoCache.hits);
-                System.out.println("FIFO Misses: " + fifoCache.misses);
-                System.out.println("FIFO Time: " + (fifoCache.endTime / 1000.0));
+                System.out.println("FIFO Hits: " + fifoCache._hits);
+                System.out.println("FIFO Misses: " + fifoCache._misses);
+                System.out.println("FIFO Time: " + (fifoCache._endTime / 1000.0));
                 return;
             }
         };

@@ -14,18 +14,18 @@ import java.util.Arrays;
  */
 public class Cache {
     // Variable holds the addresses loaded from the file
-    public final ArrayList<Integer> addresses = new ArrayList<>(Arrays.asList(1, 2, 3, 2, 1, 5, 2, 1, 6, 2, 5, 6));
-    public byte cacheSize;
-    public byte ways;
-    public long startTime;
+    public final ArrayList<Integer> _addresses = new ArrayList<>(Arrays.asList(1, 2, 3, 2, 1, 5, 2, 1, 6, 2, 5, 6));
+    public byte _cacheSize;
+    public byte _ways;
+    public long _startTime;
     // TODO: Change time to Float
     
     
     public void Setup(byte cacheSize, byte ways, String filePath) {
-        startTime = System.currentTimeMillis();
+        _startTime = System.currentTimeMillis();
         
-        this.cacheSize = cacheSize;
-        this.ways = ways;
+        _cacheSize = cacheSize;
+        _ways = ways;
     }
     
     public void displayCache() {
