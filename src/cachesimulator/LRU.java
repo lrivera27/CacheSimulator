@@ -19,6 +19,10 @@ public class LRU {
     
    
     public void Start(Cache cacheDetails){
+
+    }
+    
+    public void DisplayCache(){
         
     }
 }
