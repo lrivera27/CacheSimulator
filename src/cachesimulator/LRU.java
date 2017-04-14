@@ -18,7 +18,7 @@ public class LRU {
     public ArrayList<Integer> fifoCache = new ArrayList<>();
     
    
-    public void Start78(Cache cacheDetails){
+    public void Start(Cache cacheDetails){
         
     }
 }
