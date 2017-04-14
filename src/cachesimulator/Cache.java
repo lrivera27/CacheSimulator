@@ -21,7 +21,7 @@ public class Cache {
     // TODO: Change time to Float
     
     
-    public void Setup(byte cacheSize, byte ways, String filename) {
+    public void Setup(byte cacheSize, byte ways, String filePath) {
         startTime = System.currentTimeMillis();
         
         this.cacheSize = cacheSize;
@@ -30,5 +30,9 @@ public class Cache {
     
     public void displayCache() {
 
+    }
+    
+    public void LoadAddresses() {
+        
     }
 }
