@@ -14,16 +14,17 @@ import java.util.Arrays;
  */
 public class Cache {
 // Variable holds the addresses loaded from the file
-    public ArrayList<Integer> addresses = new ArrayList<>();
-    public byte cacheSize;
-    public byte ways;
-    public long startTime;
+    public ArrayList<Integer> _addresses = new ArrayList<>();
+    public byte _cacheSize;
+    public byte _ways;
+    public long _startTime;
 //Constructor
     public Cache (ArrayList<Integer> addresses, byte ways, byte cacheSize){
-        this.addresses = addresses;
-        this.ways = ways;
-        this.cacheSize = cacheSize;
-        startTime = System.currentTimeMillis();
+        _addresses = addresses;
+        _ways = ways;
+        _cacheSize = cacheSize;
+        _startTime = System.currentTimeMillis();
+
     }
 //
 // Aqui estaba el metodo de setup pero lo quite pq es mejor inicializar las cosas con el contructor ^
