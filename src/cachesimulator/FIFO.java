@@ -32,6 +32,7 @@ public class FIFO {
             }
         }
         endTime = System.currentTimeMillis() - cacheDetails.startTime;
+       
     }
     public void DisplayCache(){
         System.out.println("_______");

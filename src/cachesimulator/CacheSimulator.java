@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 package cachesimulator;
-import java.awt.FileDialog;
-import java.awt.Frame;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Scanner;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -15,13 +18,13 @@ import javax.swing.JOptionPane;
  */
 public class CacheSimulator extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainWindow
-     */
+    ArrayList<Integer> addresses = new ArrayList<>();
+    byte cacheSize;
+    byte ways;
+
     public CacheSimulator() {
         initComponents();
-        
-        
+
     }
 
     /**
@@ -41,7 +44,7 @@ public class CacheSimulator extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        mappingOptions = new javax.swing.JList<>();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -80,14 +83,15 @@ public class CacheSimulator extends javax.swing.JFrame {
 
         jLabel2.setText("Cache Size");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        mappingOptions.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Fully assosiative", "2-way associative", "4-way associative" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jList1.setToolTipText("");
-        jScrollPane1.setViewportView(jList1);
+        mappingOptions.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        mappingOptions.setToolTipText("");
+        jScrollPane1.setViewportView(mappingOptions);
+        mappingOptions.getAccessibleContext().setAccessibleName("mappingOptions");
 
         jLabel4.setText("Mapping mode");
 
@@ -152,53 +156,97 @@ public class CacheSimulator extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void openFile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFile_btnActionPerformed
-       // Getting file
-        Frame fileWindow = null;
-        FileDialog fd = new FileDialog(fileWindow, "Choose a file", FileDialog.LOAD);
-        fd.setDirectory("C:\\");
-        fd.setFile("*.pdf");
-        fd.setVisible(true);
-        String filename = fd.getFile();
-        if (filename == null)
-            CacheSimulator.infoBox("You cancelled the choice", "From open file btn");
-        else 
-            file_tbox.setText(new File(filename).getAbsolutePath());
-        //
-        
-    }//GEN-LAST:event_openFile_btnActionPerformed
+// Getting the file from pc
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT files", "txt");
+        chooser.setFileFilter(filter);
+        int result = chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        String filename;
 
+        if (f == null) {
+            infoBox("No file selected!", "choosing file");
+        } else {
+            switch (result) {
+                case JFileChooser.APPROVE_OPTION:
+                    filename = f.getAbsolutePath();
+                    file_tbox.setText(filename);
+
+    // Reading the file of addresses and storing in addresses
+                    File ff;
+                    Scanner scan = null;
+                    try {
+                        ff = new File(filename);
+                        scan = new Scanner(ff);
+                    } catch (Exception e) {
+                        System.exit(0);
+                    }
+    //Assuming all the data on the file are integers
+                    while (scan.hasNext()) {
+                        if(scan.hasNextInt())
+                        addresses.add(scan.nextInt());
+                        else
+                            scan.next();
+                    }
+    //
+                    System.out.println(addresses);
+                    break;
+                case JFileChooser.CANCEL_OPTION:
+                    infoBox("No file selected!", "choosing file");
+                    break;
+                case JFileChooser.ERROR_OPTION:
+                    infoBox("Error", "choosing file");
+                    break;
+            }
+
+        }
+    }//GEN-LAST:event_openFile_btnActionPerformed
+//
     private void startSim_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSim_btnActionPerformed
 
-        // Validating numbers entered by user
-        
+// Validating cache size, mapping option and file selected      
         try {
-            int num1 = Integer.parseInt(cacheSizeTbox.getText());
+            cacheSize = Byte.parseByte(cacheSizeTbox.getText());
+            String adrs = file_tbox.getText();
+            if (adrs.isEmpty()) {
+                infoBox("Choose a text file!", "Simulation btn");
+                return;
+            }
+            switch (mappingOptions.getSelectedIndex()) {
+                case -1:
+                    infoBox("Please select a mapping option.", "Simulation btn");
+                    return;
+                case 0:
+                    ways = 1;
+                    break;
+                case 1:
+                    ways = 2;
+                    break;
+                default:
+                    ways = 4;
+                    break;
+            }
         } catch (NumberFormatException e) {
-        JOptionPane.showConfirmDialog(null, "Please enter numbers only", "Error", JOptionPane.CANCEL_OPTION);
-        return;
+            JOptionPane.showConfirmDialog(null, "Please enter a number on cache size.", "Error", JOptionPane.CANCEL_OPTION);
+            return;
         }
-        // 
+//
         
-        Cache cacheSim = new Cache();
-        byte cacheSize = 8;
-        byte ways = 2;
-        cacheSim.Setup(cacheSize, ways, "");
-        
+        Cache cacheSim = new Cache(addresses, ways, cacheSize);
         FIFO fifoCache = new FIFO();
-        
+
         Runnable Fifo = new Runnable() {
             public void run() {
                 fifoCache.Start(cacheSim);
                 System.out.println("FIFO Hits: " + fifoCache.hits);
                 System.out.println("FIFO Misses: " + fifoCache.misses);
-                System.out.println("FIFO Time: " + (fifoCache.endTime / 1000.0));
+                System.out.println("FIFO Time: " + fifoCache.endTime);
                 return;
             }
         };
-        
-        
+
         new Thread(Fifo).start();
-        
+
     }//GEN-LAST:event_startSim_btnActionPerformed
 
     private void file_tboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_file_tboxActionPerformed
@@ -239,13 +287,14 @@ public class CacheSimulator extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new CacheSimulator().setVisible(true);
             }
         });
     }
-     public static void infoBox(String infoMessage, String titleBar)
-    {
+
+    public static void infoBox(String infoMessage, String titleBar) {
         JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -256,8 +305,8 @@ public class CacheSimulator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> mappingOptions;
     private javax.swing.JButton openFile_btn;
     private javax.swing.JButton startSim_btn;
     // End of variables declaration//GEN-END:variables

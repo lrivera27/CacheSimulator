@@ -13,20 +13,20 @@ import java.util.Arrays;
  * @author lrive
  */
 public class Cache {
-    // Variable holds the addresses loaded from the file
-    public final ArrayList<Integer> addresses = new ArrayList<>(Arrays.asList(1, 2, 3, 2, 1, 5, 2, 1, 6, 2, 5, 6));
+// Variable holds the addresses loaded from the file
+    public ArrayList<Integer> addresses = new ArrayList<>();
     public byte cacheSize;
     public byte ways;
     public long startTime;
-    // TODO: Change time to Float
-    
-    
-    public void Setup(byte cacheSize, byte ways, String filePath) {
-        startTime = System.currentTimeMillis();
-        
-        this.cacheSize = cacheSize;
+//Constructor
+    public Cache (ArrayList<Integer> addresses, byte ways, byte cacheSize){
+        this.addresses = addresses;
         this.ways = ways;
+        this.cacheSize = cacheSize;
+        startTime = System.currentTimeMillis();
     }
+//
+// Aqui estaba el metodo de setup pero lo quite pq es mejor inicializar las cosas con el contructor ^
     
     public void displayCache() {
 
