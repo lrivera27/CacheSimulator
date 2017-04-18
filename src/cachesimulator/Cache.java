@@ -18,11 +18,13 @@ public class Cache {
     public byte _cacheSize;
     public byte _ways;
     public long _startTime;
+    public int _numberOfBlocksPerSet;
 //Constructor
     public Cache (ArrayList<Integer> addresses, byte ways, byte cacheSize){
         _addresses = addresses;
         _ways = ways;
         _cacheSize = cacheSize;
+        _numberOfBlocksPerSet = _cacheSize / _ways;
         _startTime = System.currentTimeMillis();
 
     }

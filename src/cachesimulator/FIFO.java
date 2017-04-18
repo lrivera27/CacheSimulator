@@ -42,9 +42,6 @@ public class FIFO {
         for(byte i = 0; i < cacheDetails._ways; i++){
             _cacheIndex.add(0);
         }
-        // To calculate how many blocks there are per set we simply
-        // divide the size of the cache by how many _ways we want.
-        int numberOfBlocksPerSet = cacheDetails._cacheSize / cacheDetails._ways;
         // Holds the index we are going to be performing FIFO on
         int setIndex;
         // Holds the address gathered from the list of addresses (This needs to be filtered in the Cache class first)
@@ -62,7 +59,7 @@ public class FIFO {
             } else {
                 // Checks wether the index for the set is more than the number of blocks per set
                 // since we dont want to be referencing content out of bounce.
-                if((_cacheIndex.get(setIndex)) >= numberOfBlocksPerSet) {
+                if((_cacheIndex.get(setIndex)) >= cacheDetails._numberOfBlocksPerSet) {
                    
                     _cacheIndex.set(setIndex, 0);
                 }
@@ -70,7 +67,7 @@ public class FIFO {
                 // To get the number we want to replace, we use a formula we created that goes like this:
                 // index I want + number of set the number is at times the number of blocks per set
                 // i + SetIndex * NumberOfBlocksPerSet
-                _fifoCache.set(_cacheIndex.get(setIndex) + (setIndex * numberOfBlocksPerSet), address);
+                _fifoCache.set(_cacheIndex.get(setIndex) + (setIndex * cacheDetails._numberOfBlocksPerSet), address);
                 _cacheIndex.set(setIndex, _cacheIndex.get(setIndex)+1);
             }
         }

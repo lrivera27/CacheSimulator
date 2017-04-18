@@ -172,7 +172,7 @@ public class CacheSimulator extends javax.swing.JFrame {
                     filename = f.getAbsolutePath();
                     file_tbox.setText(filename);
 
-    // Reading the file of addresses and storing in addresses
+                    // Reading the file of addresses and storing in addresses
                     File ff;
                     Scanner scan = null;
                     try {
@@ -181,14 +181,15 @@ public class CacheSimulator extends javax.swing.JFrame {
                     } catch (Exception e) {
                         System.exit(0);
                     }
-    //Assuming all the data on the file are integers
+                    //Assuming all the data on the file are integers
                     while (scan.hasNext()) {
-                        if(scan.hasNextInt())
-                        addresses.add(scan.nextInt());
-                        else
+                        if (scan.hasNextInt()) {
+                            addresses.add(scan.nextInt());
+                        } else {
                             scan.next();
+                        }
                     }
-    //
+                    //
                     System.out.println(addresses);
                     break;
                 case JFileChooser.CANCEL_OPTION:
@@ -231,22 +232,34 @@ public class CacheSimulator extends javax.swing.JFrame {
             return;
         }
 //
-        
+
         Cache cacheSim = new Cache(addresses, ways, cacheSize);
         FIFO fifoCache = new FIFO();
+        LRU lruCache = new LRU();
+        
 
         Runnable Fifo = new Runnable() {
             public void run() {
                 fifoCache.Start(cacheSim);
                 System.out.println("FIFO Hits: " + fifoCache._hits);
                 System.out.println("FIFO Misses: " + fifoCache._misses);
-                System.out.println("FIFO Time: " + (fifoCache._endTime / 1000.0));
+                System.out.println("FIFO Time: " + fifoCache._endTime);
                 return;
             }
         };
 
-        new Thread(Fifo).start();
+        Runnable Lru = new Runnable() {
+            public void run() {
+                lruCache.Start(cacheSim);
+                System.out.println("LRU Hits: " + lruCache._hits);
+                System.out.println("LRU Misses: " + lruCache._misses);
+                System.out.println("LRU Time: " + lruCache._endTime);
+                return;
+            }
+        };
 
+        //new Thread(Fifo).start();
+        new Thread(Lru).start();
     }//GEN-LAST:event_startSim_btnActionPerformed
 
     private void file_tboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_file_tboxActionPerformed
