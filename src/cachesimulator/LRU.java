@@ -33,8 +33,7 @@ public class LRU {
             setIndex = address % cacheDetails._ways;
             
             
-            if(indexOfHit > 0) {
-                System.out.println("HEREEEE!!");
+            if(indexOfHit >= 0) {
                 _hits++;
                 
                 _lruCache.remove(indexOfHit);
@@ -46,7 +45,7 @@ public class LRU {
                 _lruCache.add(((cacheDetails._numberOfBlocksPerSet - 1) + setIndex * cacheDetails._numberOfBlocksPerSet), address);
             }
             
-            DisplayCache();
+            //DisplayCache();
         }
         
         _endTime = System.currentTimeMillis() - cacheDetails._startTime;

@@ -232,11 +232,9 @@ public class CacheSimulator extends javax.swing.JFrame {
             return;
         }
 //
-
         Cache cacheSim = new Cache(addresses, ways, cacheSize);
         FIFO fifoCache = new FIFO();
         LRU lruCache = new LRU();
-        
 
         Runnable Fifo = new Runnable() {
             public void run() {
@@ -258,7 +256,7 @@ public class CacheSimulator extends javax.swing.JFrame {
             }
         };
 
-        //new Thread(Fifo).start();
+        new Thread(Fifo).start();
         new Thread(Lru).start();
     }//GEN-LAST:event_startSim_btnActionPerformed
 
