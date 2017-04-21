@@ -56,6 +56,7 @@ public class FIFO {
             // if it is, it's a hit
             if(_fifoCache.contains(address)) {
                 _hits++;
+                System.out.println("HIT");
             } else {
                 // Checks wether the index for the set is more than the number of blocks per set
                 // since we dont want to be referencing content out of bounce.
@@ -70,6 +71,7 @@ public class FIFO {
                 _fifoCache.set(_cacheIndex.get(setIndex) + (setIndex * cacheDetails._numberOfBlocksPerSet), address);
                 _cacheIndex.set(setIndex, _cacheIndex.get(setIndex)+1);
             }
+            DisplayCache();
         }
         // This calculates the time it takes to finish the algorithm
         _endTime = System.currentTimeMillis() - cacheDetails._startTime;

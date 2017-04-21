@@ -235,13 +235,14 @@ public class CacheSimulator extends javax.swing.JFrame {
         Cache cacheSim = new Cache(addresses, ways, cacheSize);
         FIFO fifoCache = new FIFO();
         LRU lruCache = new LRU();
+        LFU lfuCache = new LFU();
 
         Runnable Fifo = new Runnable() {
             public void run() {
                 fifoCache.Start(cacheSim);
                 System.out.println("FIFO Hits: " + fifoCache._hits);
                 System.out.println("FIFO Misses: " + fifoCache._misses);
-                System.out.println("FIFO Time: " + fifoCache._endTime);
+                System.out.println("FIFO Time: " + fifoCache._endTime / 1000.0);
                 return;
             }
         };
@@ -251,13 +252,24 @@ public class CacheSimulator extends javax.swing.JFrame {
                 lruCache.Start(cacheSim);
                 System.out.println("LRU Hits: " + lruCache._hits);
                 System.out.println("LRU Misses: " + lruCache._misses);
-                System.out.println("LRU Time: " + lruCache._endTime);
+                System.out.println("LRU Time: " + lruCache._endTime / 1000.0);
                 return;
             }
         };
 
-        new Thread(Fifo).start();
+        Runnable Lfu = new Runnable() {
+            public void run() {
+                lfuCache.Start(cacheSim);
+                System.out.println("LRU Hits: " + lfuCache._hits);
+                System.out.println("LRU Misses: " + lfuCache._misses);
+                //System.out.println("LRU Time: " + lfuCache._endTime / 1000.0);
+                return;
+            }
+        };
+
+        //new Thread(Fifo).start();
         new Thread(Lru).start();
+        //new Thread(Lfu).start();
     }//GEN-LAST:event_startSim_btnActionPerformed
 
     private void file_tboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_file_tboxActionPerformed
