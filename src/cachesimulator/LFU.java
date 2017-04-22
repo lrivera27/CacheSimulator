@@ -155,21 +155,11 @@ public class LFU {
                         minimumIndex = j;
                     }
                 }
-
+                
+                //  Now we insert the new address into the Least Frequently used block
                 _lfuCache.get(minimumIndex)._address = address;
                 _lfuCache.get(minimumIndex)._frequency = 0;
             }
-            DisplayCache();
         }
-    }
-
-    public void DisplayCache() {
-        System.out.println("_______");
-        for (byte i = 0; i < _lfuCache.size(); i++) {
-            System.out.print("|__");
-            System.out.print(_lfuCache.get(i)._address);
-            System.out.println("__|");
-        }
-        System.out.println("_______");
     }
 }
