@@ -146,7 +146,9 @@ public class LFU {
                 for (int j = startingIndex; j <= endingIndex; j++) {
                     
                     /*
-                        If the frequency of 
+                        If the frequency of what we chose to be the minimum
+                        is less than what's inside the i index, then we replace
+                        the value for that one.
                     */
                     if (_lfuCache.get(j)._frequency < minimumFrequency) {
                         minimumFrequency = _lfuCache.get(j)._frequency;
