@@ -104,19 +104,8 @@ public class FIFO {
                 _fifoCache.set(_cacheIndex.get(setIndex) + (setIndex * cacheDetails._numberOfBlocksPerSet), address);
                 _cacheIndex.set(setIndex, _cacheIndex.get(setIndex) + 1);
             }
-            DisplayCache();
         }
         // This calculates the time it takes to finish the algorithm
         _endTime = System.currentTimeMillis() - cacheDetails._startTime;
-    }
-
-    public void DisplayCache() {
-        System.out.println("_______");
-        for (byte i = 0; i < _fifoCache.size(); i++) {
-            System.out.print("|__");
-            System.out.print(_fifoCache.get(i));
-            System.out.println("__|");
-        }
-        System.out.println("_______");
     }
 }
