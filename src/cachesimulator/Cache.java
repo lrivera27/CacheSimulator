@@ -7,7 +7,6 @@ package cachesimulator;
 
 import cachesimulator.LFU.Block;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  *
