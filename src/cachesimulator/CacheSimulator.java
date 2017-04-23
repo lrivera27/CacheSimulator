@@ -236,6 +236,7 @@ public class CacheSimulator extends javax.swing.JFrame {
         FIFO fifoCache = new FIFO();
         LRU lruCache = new LRU();
         LFU lfuCache = new LFU();
+        Random randomCache = new Random();
 
         Runnable Fifo = new Runnable() {
             public void run() {
@@ -267,9 +268,20 @@ public class CacheSimulator extends javax.swing.JFrame {
             }
         };
 
+        Runnable Random = new Runnable() {
+            public void run() {
+                randomCache.Start(cacheSim);
+                System.out.println("Random Hits: " + randomCache._hits);
+                System.out.println("Random Misses: " + randomCache._misses);
+                //System.out.println("LRU Time: " + lfuCache._endTime / 1000.0);
+                return;
+            }
+        };
+
         //new Thread(Fifo).start();
-        new Thread(Lru).start();
+        //new Thread(Lru).start();
         //new Thread(Lfu).start();
+        new Thread(Random).start();
     }//GEN-LAST:event_startSim_btnActionPerformed
 
     private void file_tboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_file_tboxActionPerformed
