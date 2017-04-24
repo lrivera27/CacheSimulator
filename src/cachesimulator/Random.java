@@ -19,6 +19,8 @@ public class Random {
     public ArrayList<Integer> _randomCache = new ArrayList<>();
 
     public void Start(Cache cacheDetails) {
+        long startTime = System.currentTimeMillis();
+        
         for (byte i = 0; i < cacheDetails._cacheSize; i++) {
             _randomCache.add(-1);
         }
@@ -65,10 +67,7 @@ public class Random {
                  */
                 if (_randomCache.get(j) == address) {
                     indexOfHit = j;
-
-                    if (hasSpace >= 0) {
-                        break;
-                    }
+                    break;
                 }
                 if (_randomCache.get(j) == -1) {
                     hasSpace = j;
@@ -90,7 +89,8 @@ public class Random {
                 }
                 _randomCache.set(randomIndex, address);
             }
-            cacheDetails.DisplayCache(_randomCache);
         }
+        
+        _endTime = System.currentTimeMillis() - startTime;
     }
 }
