@@ -205,6 +205,11 @@ public class CacheSimulator extends javax.swing.JFrame {
 //
     private void startSim_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSim_btnActionPerformed
 
+        long startTime = System.currentTimeMillis();
+        
+
+        ArrayList<Integer> threads = new ArrayList<>();
+
 // Validating cache size, mapping option and file selected      
         try {
             cacheSize = Byte.parseByte(cacheSizeTbox.getText());
@@ -241,9 +246,7 @@ public class CacheSimulator extends javax.swing.JFrame {
         Runnable Fifo = new Runnable() {
             public void run() {
                 fifoCache.Start(cacheSim);
-                System.out.println("FIFO Hits: " + fifoCache._hits);
-                System.out.println("FIFO Misses: " + fifoCache._misses);
-                System.out.println("FIFO Time: " + fifoCache._endTime / 1000.0);
+                threads.add(1);
                 return;
             }
         };
@@ -251,9 +254,7 @@ public class CacheSimulator extends javax.swing.JFrame {
         Runnable Lru = new Runnable() {
             public void run() {
                 lruCache.Start(cacheSim);
-                System.out.println("LRU Hits: " + lruCache._hits);
-                System.out.println("LRU Misses: " + lruCache._misses);
-                System.out.println("LRU Time: " + lruCache._endTime / 1000.0);
+                threads.add(1);
                 return;
             }
         };
@@ -261,9 +262,7 @@ public class CacheSimulator extends javax.swing.JFrame {
         Runnable Lfu = new Runnable() {
             public void run() {
                 lfuCache.Start(cacheSim);
-                System.out.println("LRU Hits: " + lfuCache._hits);
-                System.out.println("LRU Misses: " + lfuCache._misses);
-                //System.out.println("LRU Time: " + lfuCache._endTime / 1000.0);
+                threads.add(1);
                 return;
             }
         };
@@ -271,17 +270,61 @@ public class CacheSimulator extends javax.swing.JFrame {
         Runnable Random = new Runnable() {
             public void run() {
                 randomCache.Start(cacheSim);
-                System.out.println("Random Hits: " + randomCache._hits);
-                System.out.println("Random Misses: " + randomCache._misses);
-                //System.out.println("LRU Time: " + lfuCache._endTime / 1000.0);
+                threads.add(1);
                 return;
             }
         };
 
-        //new Thread(Fifo).start();
+        Runnable Threads = new Runnable() {
+            public void run() {
+                long endTime;
+                while (threads.size() != 1) {
+
+                }
+                
+                endTime = System.currentTimeMillis() - startTime;
+                
+                System.out.println("All algorithms done!");
+
+                System.out.println("-----------------");
+                System.out.println("FIFO details: ");
+                System.out.println("Hits: " + fifoCache._hits);
+                System.out.println("Misses: " + fifoCache._misses);
+                System.out.println("Time: " + fifoCache._endTime);
+                System.out.println("-----------------");
+
+                System.out.println("-----------------");
+                System.out.println("LRU details: ");
+                System.out.println("Hits: " + lruCache._hits);
+                System.out.println("Misses: " + lruCache._misses);
+                System.out.println("Time: " + lruCache._endTime);
+                System.out.println("-----------------");
+
+                System.out.println("-----------------");
+                System.out.println("LFU details: ");
+                System.out.println("Hits: " + lfuCache._hits);
+                System.out.println("Misses: " + lfuCache._misses);
+                System.out.println("Time: " + lfuCache._endTime);
+                System.out.println("-----------------");
+
+                System.out.println("-----------------");
+                System.out.println("Random details: ");
+                System.out.println("Hits: " + randomCache._hits);
+                System.out.println("Misses: " + randomCache._misses);
+                System.out.println("Time: " + randomCache._endTime);
+                System.out.println("-----------------");
+                
+                System.out.println("-----------------");
+                System.out.println("Cache Total Execution Time: " + endTime);
+                System.out.println("-----------------");
+            }
+        };
+
+        new Thread(Fifo).start();
         //new Thread(Lru).start();
         //new Thread(Lfu).start();
-        new Thread(Random).start();
+        //new Thread(Random).start();
+        new Thread(Threads).start();
     }//GEN-LAST:event_startSim_btnActionPerformed
 
     private void file_tboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_file_tboxActionPerformed
@@ -295,7 +338,7 @@ public class CacheSimulator extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) { 
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
