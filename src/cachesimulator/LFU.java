@@ -5,7 +5,7 @@ import java.util.ArrayList;
     Software made by: Luis E. Rivera and Christian Camacho
     Objective:
             This class is made to simulate a cache that is
-        using Least Frequently as it's replacement algorithm.
+        using Least-Frequently-Used as it's replacement algorithm.
         It's designed to remove the address with the lowest number
         of uses. It does this by keeping track of how many uses or
         frequency it has.
@@ -49,7 +49,8 @@ public class LFU {
         several class variables explained uptop.
     */
     public void Start(Cache cacheDetails) {
-         
+        long startTime = System.currentTimeMillis();
+        
         /*
             Since we are using dynamic arrays, we need to fill them
             up with instances of Blocks so we can reference them later on. 
@@ -78,7 +79,7 @@ public class LFU {
         
         /*
             Since we have only one array, doing a regular linear search
-            in the array to find hits, would mean our algorithm would be
+            in the array to find hits would mean our algorithm would be
             really slow, so these two variables will hold the first and last
             index of the set.
         */
@@ -161,5 +162,7 @@ public class LFU {
                 _lfuCache.get(minimumIndex)._frequency = 0;
             }
         }
+        
+        _endTime = System.currentTimeMillis() - startTime;
     }
 }
