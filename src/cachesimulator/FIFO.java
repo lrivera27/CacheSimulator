@@ -19,12 +19,12 @@ import java.util.ArrayList;
  */
 public class FIFO {
 
-    // Holds the general FIFO details
+    //  Holds the general FIFO details
     public int _hits;
     public int _misses;
     public long _endTime;
 
-    // Holds the cache that we will apliying FIFO's algorithm to.
+    //  Holds the cache that we will applying FIFO's algorithm to.
     public ArrayList<Integer> _fifoCache = new ArrayList<>();
 
     /* 
@@ -40,6 +40,7 @@ public class FIFO {
         variables explained uptop.
     */
     public void Start(Cache cacheDetails) {
+        long startTime = System.currentTimeMillis();
         
         /*  
             Since we are using dynamic arrays, we need to fill them up so
@@ -83,7 +84,6 @@ public class FIFO {
             */
             if (_fifoCache.contains(address)) {
                 _hits++;
-                System.out.println("HIT");
             } else {
                 
                 /* 
@@ -106,6 +106,6 @@ public class FIFO {
             }
         }
         // This calculates the time it takes to finish the algorithm
-        _endTime = System.currentTimeMillis() - cacheDetails._startTime;
+        _endTime = System.currentTimeMillis() - startTime;
     }
 }
