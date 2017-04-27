@@ -55,9 +55,11 @@ public class Random {
                 so we take the number of blocks per set and re-write our 
                 formula as: Blocks per set + Set * Blocks per set.
              */
+
             endingIndex = (cacheDetails._numberOfBlocksPerSet - 1) + setIndex * cacheDetails._numberOfBlocksPerSet;
 
             hasSpace = -1;
+            
             for (int j = startingIndex; j <= endingIndex; j++) {
 
                 /*  
@@ -66,11 +68,10 @@ public class Random {
                     the address was.
                  */
                 if (_randomCache.get(j) == address) {
-                    indexOfHit = j;
                     break;
                 }
                 if (_randomCache.get(j) == -1) {
-                    hasSpace = j;
+                    hasSpace = j - startingIndex;
                 }
             }
             if (indexOfHit >= 0) {
@@ -80,12 +81,12 @@ public class Random {
 
                 if (hasSpace >= 0) {
                     
-                    randomIndex = hasSpace + setIndex * cacheDetails._numberOfBlocksPerSet;
+                    randomIndex = hasSpace + (setIndex * cacheDetails._numberOfBlocksPerSet);
                     
                 } else {
                     
                     randomIndex = ((int) (Math.random()) * (cacheDetails._numberOfBlocksPerSet - 1))
-                            + setIndex * cacheDetails._numberOfBlocksPerSet;
+                            + (setIndex * cacheDetails._numberOfBlocksPerSet);
                 }
                 _randomCache.set(randomIndex, address);
             }
